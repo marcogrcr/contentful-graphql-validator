@@ -1,6 +1,6 @@
 # contentful-graphql-validator
 
-This packge provides a funciton that validates GraphQL documents meant to be sent to the [GraphQL Content API].
+This packge provides a function that validates GraphQL documents meant to be sent to the [GraphQL Content API].
 
 # Usage
 
@@ -62,26 +62,30 @@ query {
 }
 ```
 
-While it's unlikely that someone would accidentally write that query, it's more likely for something like this happens,
-especially in complex queries:
+While it's unlikely that someone would accidentally write that query, it's more likely for something like the following
+to happen, especially in complex queries:
 
 ```graphql
 query ($preview: Boolean) {
   myType1(preview: $preview) {
     myField
   }
+
+  # (...)
   # (...long complex query...)
+  # (...)
+
+  # Accidental omision of `preview: $preview`
   myTypeN {
-    # Accidentally forgot to add `preview: $preview`
     myField
   }
 }
 ```
 
-When the query is executed with `{ preview: true }`, the `myTypeN` field would obtain published content since the
-`preview` argument defaults to `false`.
+When the query is executed with `{ preview: true }` to obtain preview content, the `myTypeN` field would obtain
+published content since the `preview` argument defaults to `false`.
 
-This becomes even more complex when using fragments:
+Here's another example that illustrates how it can be complex to determine when the `preview` argument be specified:
 
 ```graphql
 query ($preview: Boolean) {
@@ -96,14 +100,14 @@ fragment MyQueryFragment1 on Query {
 }
 
 fragment MyQueryFragment2 on Query {
+  # This should have `preview: $preview`
   myType1 {
-    # This should have `preview: $preview`
     ...MyType1Fragment
   }
 }
 
 fragment MyType1Fragment on Type1 {
-  # This doesn't need the `preview` argument since it inherits the `preview` argument value from `Query.myType1`
+  # This doesn't need `preview: $preview` since it inherits the `preview` argument value from `Query.myType1`
   myField
 }
 ```
