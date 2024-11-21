@@ -1,0 +1,55 @@
+{
+  "name": "contentful-graphql-validator",
+  "version": "1.0.0",
+  "description": "Validates Contentful GraphQL API queries",
+  "author": "Marco Gonzalez",
+  "license": "MIT",
+  "homepage": "https://github.com/marcogrcr/contentful-graphql-validator#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcogrcr/contentful-graphql-validator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marcogrcr/contentful-graphql-validator/issues"
+  },
+  "type": "module",
+  "main": "./dist/types/index.cjs",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    "types": "./dist/types/index.d.ts",
+    "import": "./dist/esm/index.mjs",
+    "require": "./dist/cjs/index.cjs"
+  },
+  "scripts": {
+    "build": "npm run lint && npm run build:ts && npm run build:cjs && npm run build:mjs",
+    "build:ts": "tsc",
+    "build:cjs": "esbuild --format=cjs --outdir=dist/cjs src/index.ts",
+    "build:mjs": "esbuild --format=esm --outdir=dist/esm src/index.ts",
+    "lint": "eslint .",
+    "prepare": "husky",
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "graphql": "^16.9.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/js": "^9.15.0",
+    "@tsconfig/node18": "^18.2.4",
+    "@types/eslint__js": "^8.42.3",
+    "@vitest/coverage-v8": "^2.1.5",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0",
+    "vitest": "^2.1.5"
+  }
+}
